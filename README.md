@@ -12,10 +12,18 @@ This project requires:
 
 ## How to run
 
-1. From the directory root, install required packages using the command `pip install -r requirements.txt` 
-2. Start the server using the command `python manage.py runserver`
+1. From the directory root, install required packages using the command `pip install -r requirements.txt`
+2. Create `.env` text file in the project directory root and configure settings value
+3. Start the server using the command `python manage.py runserver`
+4. Server should be up (default) at localhost port 8000
 
-App should be running on localhost port 8000
+> **Note:** A required configuration value for `.env` is `SECRET_KEY`.
+> Useful tool to generate one: https://www.miniwebtool.com/django-secret-key-generator/.
+> 
+> **Example:** (a line in `.env`)
+> ```text
+> SECRET_KEY=c07(7b9676lfo8l6xwe#mn(ua%%bpt4c0bh)9jcr0p+v4fs*8k
+> ```
 
 ### Progress
 
