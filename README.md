@@ -82,7 +82,7 @@ You can use any port that's available, not just 8001 like shown.
 - [x] Part 3: Views and templates
 - [x] Part 4: Forms and generic views
 - [x] Part 5: Testing
-- [ ] Part 6: Static files
+- [x] Part 6: Static files
 - [ ] Part 7: Customizing the admin site
 
 ## FAQ

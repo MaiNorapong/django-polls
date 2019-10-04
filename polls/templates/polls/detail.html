@@ -1,3 +1,10 @@
+{% extends "polls/base.html" %}
+
+{% block title %}
+<title>{{ question.question_text }} | Django polls | Mai</title>
+{% endblock %}
+
+{% block content %}
 <h1>{{ question.question_text }}</h1>
 
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
@@ -10,3 +17,4 @@
 {% endfor %}
 <input type="submit" value="Vote">
 </form>
+{% endblock %}

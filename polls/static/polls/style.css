@@ -1,0 +1,17 @@
+html {
+  font-family: "Roboto", Arial, sans-serif;
+}
+
+a {
+  color: green;
+  border-bottom: 1px dotted #798780;
+  text-decoration: transparent;
+}
+
+a:hover {
+  background: #F1FFF7;
+}
+
+body {
+  /*background: white url("images/background.gif") no-repeat;*/
+}

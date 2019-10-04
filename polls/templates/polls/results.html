@@ -1,10 +1,16 @@
-<h1>{{ question.question_text }}</h1>
+{% extends "polls/base.html" %}
 
+{% block title %}
+<title>{{ question.question_text }} - Results | Django polls | Mai</title>
+{% endblock %}
+
+{% block content %}
+<h1>{{ question.question_text }}</h1>
 
 <table>
   <thead>
     <tr>
-      <th colspan="2">Vote results for {{ question.question_text }}</th>
+      <th colspan="2">Vote results for <em>{{ question.question_text }}</em></th>
     </tr>
   </thead>
   <tbody>
@@ -19,3 +25,4 @@
 </table>
 
 <a href="{% url 'polls:index' %}">Vote on other polls?</a>
+{% endblock %}

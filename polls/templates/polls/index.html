@@ -1,3 +1,11 @@
+{% extends "polls/base.html" %}
+
+{% block title %}
+<title>Django polls | Mai</title>
+{% endblock %}
+
+{% block content %}
+<h1>Django polls home</h1>
 {% if latest_question_list %}
   <ul>
   {% for question in latest_question_list %}
@@ -7,3 +15,4 @@
 {% else %}
   <p>No polls are available.</p>
 {% endif %}
+{% endblock %}

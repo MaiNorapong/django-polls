@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  {% block title %}<title>Django polls | Mai</title>{% endblock %}
+
+  <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'polls/style.css' %}">
+</head>
+<body>
+  {% block content %}{% endblock %}
+</body>
+</html>
