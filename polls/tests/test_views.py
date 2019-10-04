@@ -4,7 +4,17 @@ from django.test import TestCase
 from django.urls import reverse
 from django.utils import timezone
 
-from polls.models import Question
+from polls.models import Choice, Question
+
+
+class SiteIndexViewTests(TestCase):
+    def test_redirects_to_question_index(self):
+        """
+        Root URL redirects to Question index. Should not be permanent.
+        """
+        response = self.client.get('/')
+        self.assertRedirects(response, reverse('polls:index'))
+        self.assertEqual(response.status_code, 302)
 
 
 def create_question(question_text, days):
@@ -96,6 +106,68 @@ class QuestionDetailViewTests(TestCase):
         response = self.client.get(url)
         self.assertContains(response, past_question.question_text)
 
+    def test_uses_correct_template(self):
+        """
+        The detail view of a question with a pub_date in the past
+        uses the correct template.
+        """
+        question = create_question(question_text='Question', days=0)
+        url = reverse('polls:detail', args=(question.id, ))
+        response = self.client.get(url)
+        self.assertTemplateUsed(response, 'polls/detail.html')
+
+
+class QuestionVoteViewTests(TestCase):
+    # TODO: Write docstrings for test functions
+
+    def setUp(self) -> None:
+        self.test_question = create_question(question_text='Question 1', days=0)
+        self.test_choice1 = Choice.objects.create(
+            question=self.test_question,
+            choice_text='Choice 1 for Question 1',
+            votes=1
+        )
+        self.test_choice2 = Choice.objects.create(
+            question=self.test_question,
+            choice_text='Choice 2 for Question 1',
+            votes=2
+        )
+        self.test_choice3 = Choice.objects.create(
+            question=self.test_question,
+            choice_text='Choice 3 for Question 1',
+            votes=0
+        )
+
+    def test_form_invalid_no_choice_chosen(self):
+        context = {}
+        url = reverse('polls:vote', kwargs={'question_id': self.test_question.id})
+        response = self.client.post(url, context)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue('error_message' in response.context)
+
+    def test_form_redirects_to_results_on_success(self):
+        context = {
+            'choice': self.test_choice1.id
+        }
+        url = reverse('polls:vote', kwargs={'question_id': self.test_question.id})
+        response = self.client.post(url, context)
+
+        url = reverse('polls:results', args=(self.test_question.id,))
+        self.assertRedirects(response, url)
+        self.assertEqual(response.status_code, 302)
+
+    def test_form_changes_data_correctly_on_success(self):
+        context = {
+            'choice': self.test_choice1.id
+        }
+        url = reverse('polls:vote', kwargs={'question_id': self.test_question.id})
+        response = self.client.post(url, context)
+
+        self.assertEqual(self.test_question.choice_set.first().votes, 2)
+        self.assertEqual(self.test_question.choice_set.all()[1].votes, 2)
+        self.assertEqual(self.test_question.choice_set.all()[2].votes, 0)
+
 
 class QuestionResultsViewTests(TestCase):
     def test_future_question(self):
@@ -107,3 +179,23 @@ class QuestionResultsViewTests(TestCase):
         url = reverse('polls:results', args=(future_question.id,))
         response = self.client.get(url)
         self.assertEqual(response.status_code, 404)
+
+    def test_past_question(self):
+        """
+        The results view of a question with a pub_date in the past
+        returns a 200 OK.
+        """
+        past_question = create_question(question_text='Past Question.', days=-5)
+        url = reverse('polls:results', args=(past_question.id, ))
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+
+    def test_uses_correct_template(self):
+        """
+        The results view of a question with a pub_date in the past
+        uses the correct template. Requires test_past_question to pass.
+        """
+        question = create_question(question_text='Question', days=0)
+        url = reverse('polls:results', args=(question.id, ))
+        response = self.client.get(url)
+        self.assertTemplateUsed(response, 'polls/results.html')

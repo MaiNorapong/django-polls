@@ -33,3 +33,18 @@ class QuestionModelTests(TestCase):
         time = timezone.now() - datetime.timedelta(hours=23, minutes=59, seconds=59)
         recent_question = Question(pub_date=time)
         self.assertIs(recent_question.was_published_recently(), True)
+
+    # TODO: Finish creating tests and writing docstrings
+
+    def test_num_choices_with_empty_question(self):
+        empty_question = Question()
+        self.assertEqual(empty_question.num_choices(), 0)
+
+    def test_num_choices_with_one_choice(self):
+        pass
+
+    def test_num_choices_with_two_choices(self):
+        pass
+
+    def test_choice_set_ordered_by_votes(self):
+        pass
