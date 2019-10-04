@@ -56,6 +56,12 @@ $ python manage.py runserver
 The server should be up at localhost on port 8000.  
 Go to the polls app at `polls/` and the [admin site](#admin-site) at `admin/`.  
 
+If you choose to use the sample data, an account with admin privileges will have
+already been created for you:
+
+Username: `admin`  
+Password: `password`
+
 If for some reason port 8000 is not available, simply specify another port like so:
 
 ```shell script
