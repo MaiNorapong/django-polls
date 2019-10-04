@@ -40,7 +40,7 @@ You're all set now!
 > A useful tool to generate one: https://www.miniwebtool.com/django-secret-key-generator/.
 > 
 > **Example:**
-> ```
+> ```text
 > # A line in `project_directory/.env`
 > SECRET_KEY=c07(7b9676lfo8l6xwe#mn(ua%%bpt4c0bh)9jcr0p+v4fs*8k
 > ```
