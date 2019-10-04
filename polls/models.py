@@ -18,6 +18,12 @@ class Question(models.Model):
     def num_choices(self) -> int:
         return sum(1 for _ in self.choice_set.all())
 
+    def choice_set_ordered_by_votes(self):
+        """
+        Returns choice_set (QuerySet) ordered by votes (descending order).
+        """
+        return self.choice_set.order_by('-votes')
+
 
 class Choice(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
